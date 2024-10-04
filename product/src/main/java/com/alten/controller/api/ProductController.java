@@ -28,9 +28,9 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity.HeadersBuilder<?> deleteProductById(Long id){
+    public ResponseEntity<Void> deleteProductById(@PathVariable("id") Long id){
         productService.deleteProduct(id);
-        return ResponseEntity.noContent();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping
