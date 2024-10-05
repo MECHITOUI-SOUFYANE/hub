@@ -1,0 +1,38 @@
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8.1.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: 'products'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3307:3307'
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - mysql
+  product:
+    container_name: hub-product
+    image: soufyanemc/product
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - db.user=root
+      - db.password=root
+    networks:
+      - spring
+      - mysql
+    depends_on:
+      - mysql
+
+networks:
+  mysql:
+    driver: bridge
+  spring:
+    driver: bridge
+volumes:
+  mysql:
+
