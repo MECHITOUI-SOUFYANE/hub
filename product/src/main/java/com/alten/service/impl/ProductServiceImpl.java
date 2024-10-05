@@ -1,5 +1,6 @@
 package com.alten.service.impl;
 
+import com.alten.configuration.LocalResolverConfiguration;
 import com.alten.dao.AbstractDao;
 import com.alten.dao.ProductRepository;
 import com.alten.dto.ProductDto;
@@ -13,9 +14,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ReflectionUtils;
 
-import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,25 +33,17 @@ public class ProductServiceImpl implements ProductService {
         Product product = productMapper.mapToEntity(productDto);
         return Optional.of(productRepository.save(product))
                 .map(Product::getId)
-                .orElseThrow(() -> new ProductException("message"));
-    }
-
-    @Override
-    @Transactional
-    public ProductDto updateProduct(ProductDto productDto) {
-        Product product = productMapper.mapToEntity(productDto);
-        return productMapper.mapToDto(abstractDao.update(product));
+                .orElseThrow(() -> new ProductException(LocalResolverConfiguration.getMessage("product.creation.exception",productDto.getName())));
     }
 
     @Override
     @Transactional
     public ProductDto updateProductIfExiste(Long productId, ProductDto productDto) {
-
         return productRepository.findById(productId)
                 .map(product -> UtilsHelper.mergeValues(productDto,product))
                 .map(abstractDao::update)
                 .map(productMapper::mapToDto)
-                .orElseThrow(() -> new ProductNotFoundException("message"));
+                .orElseThrow(ProductNotFoundException::new);
     }
 
     @Override
@@ -65,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto findProductById(Long productId) {
         return productRepository.findById(productId)
                 .map(productMapper::mapToDto)
-                .orElseThrow(() -> new ProductNotFoundException("message"));
+                .orElseThrow(ProductNotFoundException::new);
     }
 
     @Override

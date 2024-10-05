@@ -62,4 +62,14 @@ public class Product {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @PrePersist
+    public void prePersiste(){
+        this.createdAt = new Date();
+    }
+
+    @PreUpdate
+    public void preUpdate(){
+        this.updatedAt = new Date();
+    }
+
 }

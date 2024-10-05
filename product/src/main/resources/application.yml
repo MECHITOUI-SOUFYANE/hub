@@ -22,5 +22,10 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT
+  main:
+    allow-circular-references: true
+springdoc:
+  api-docs:
+    resolve-schema-properties: true
 server:
   port: 8888
