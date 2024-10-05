@@ -1,8 +1,9 @@
 package com.alten.exception;
 
-public class ProductNotFoundException extends ProductException{
+import com.alten.configuration.LocalResolverConfiguration;
 
-    public ProductNotFoundException ( String message){
-        super(message);
+public class ProductNotFoundException extends ProductException{
+    public ProductNotFoundException (){
+        super(LocalResolverConfiguration.getMessage("product.not.found.exception"));
     }
 }
