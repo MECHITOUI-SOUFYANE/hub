@@ -1,12 +1,12 @@
 package com.alten;
 
 import com.alten.dto.ProductDto;
-import com.alten.entity.Product;
 import com.alten.enums.InventoryStatus;
 import com.alten.service.api.ProductService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
+@EnableCaching
 public class Runner {
 
     public static void main(String[] args) {
