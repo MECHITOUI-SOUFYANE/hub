@@ -18,6 +18,4 @@ public interface ProductMapper {
     ProductDto mapToDto(Product product);
     @InheritMaps(method = "mapToDto")
     List<ProductDto> mapToListDto(List<Product> products);
-
-    Product cloneProduct(ProductDto productDto , Product product);
 }

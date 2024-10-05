@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -14,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Schema(description = "product.dto.description")
-public class ProductDto {
+public class ProductDto implements Serializable {
 
     @Schema(description = "product.id")
     private Long id;
