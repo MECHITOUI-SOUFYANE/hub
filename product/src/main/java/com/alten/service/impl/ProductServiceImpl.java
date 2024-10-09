@@ -1,5 +1,6 @@
 package com.alten.service.impl;
 
+import com.alten.configuration.CustomKeyGenerator;
 import com.alten.configuration.LocalResolverConfiguration;
 import com.alten.dao.AbstractDao;
 import com.alten.dao.ProductRepository;
@@ -67,6 +68,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(cacheNames = CACHE_NAME,  keyGenerator = CustomKeyGenerator.KEY_GENERATOR_NAME)
     @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
     public List<ProductDto> findAllProduct() {
         // Anti-pattern
@@ -74,5 +76,10 @@ public class ProductServiceImpl implements ProductService {
                 .stream()
                 .map(productMapper::mapToDto)
                 .toList();
+    }
+
+    @Override
+    @CacheEvict( cacheNames = CACHE_NAME , allEntries = true)
+    public void evictionCache() {
     }
 }
