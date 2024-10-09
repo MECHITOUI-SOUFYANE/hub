@@ -10,4 +10,6 @@ public interface ProductService {
     void deleteProduct(Long productId);
     ProductDto findProductById(Long productId);
     List<ProductDto> findAllProduct();
+
+    void evictionCache();
 }
